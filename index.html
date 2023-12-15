@@ -7,17 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Display</title>
     <style>
-       body,
+      body,
       html {
         margin: 0;
       }
+
+     
+
       .card {
         padding: 12px 0px 12px 18px;
         display: flex;
-        width: 290px;
-         background-color: white
-      ;
-      
+        width: 270px;
+         background-color: yellow;
         position: relative;
         flex-direction: column;
         gap: 10px;
@@ -40,7 +41,7 @@
         padding-top: 5px;
         font-family: "Rubik", sans-serif;
         font-size: 10px;
-        font-weight: 800;
+        font-weight: 700;
         line-height: 13px;
         letter-spacing: 0;
         text-align: left;
@@ -64,7 +65,7 @@
       .label1 {
         font-family: "Rubik", sans-serif;
         font-size: 9px;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -73,8 +74,8 @@
 
       .value1 {
         font-family: "Rubik", sans-serif;
-        font-size: 9.5px;
-        font-weight: 800;
+        font-size: 10px;
+        font-weight: 700;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -84,7 +85,7 @@
       .label2 {
         font-family: "Rubik", sans-serif;
         font-size: 9px;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -94,7 +95,7 @@
       .value2 {
         font-family: "Rubik", sans-serif;
         font-size: 10px;
-        font-weight: 800;
+        font-weight: 700;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -104,7 +105,7 @@
       .label3 {
         font-family: "Rubik", sans-serif;
         font-size: 9px;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -114,7 +115,7 @@
       .value3 {
         font-family: "Rubik", sans-serif;
         font-size: 10px;
-        font-weight: 800;
+        font-weight: 700;
         line-height: 14px;
         letter-spacing: 0.16px;
         text-align: left;
@@ -145,34 +146,18 @@
         <div class="border"></div>
     </div>
 
-   <script>
-    const params = {};
-
-    function setQueryParams() {
-        let queryString = window.location.search;
-        if (queryString) {
-            queryString = queryString.replace('?', '').trim();
-        } else {
-            queryString = '';
-        }
-        queryString = queryString.split("&").filter(v => v);
-
-        for (const param of queryString) {
-            const [key, value] = param.split("=");
-            params[key] = decodeURIComponent(value.replace(/\+/g, ' '));
-        }
-    }
+ <script>
+    // Keep this outside updateCardContent() so it is not creating a new query instance on each function call
+    const query = new URLSearchParams(window.location.search);
 
     function updateCardContent() {
-        setQueryParams();
-
-        var title = params['title'] || '';
-        var label1 = params['label1'] || '';
-        var value1 = params['value1'] || '';
-        var label2 = params['label2'] || '';
-        var value2 = params['value2'] || '';
-        var label3 = params['label3'] || '';
-        var value3 = params['value3'] || '';
+        var title = query.get('title') || '';
+        var label1 = query.get('label1') || '';
+        var value1 = query.get('value1') || '';
+        var label2 = query.get('label2') || '';
+        var value2 = query.get('value2') || '';
+        var label3 = query.get('label3') || '';
+        var value3 = query.get('value3') || '';
 
         document.getElementById('cardTitle').innerHTML = title;
         document.getElementById('label1').innerHTML = label1;
@@ -185,6 +170,7 @@
 
     window.addEventListener("load", updateCardContent);
 </script>
+
 
 </body>
 
