@@ -6,171 +6,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Display</title>
-    <style>
-      body,
-      html {
-        margin: 0;
-      }
-
-     
-
-      .card {
-        padding: 12px 0px 12px 18px;
-        display: flex;
-        width: 270px;
-         background-color: yellow;
-        position: relative;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 8px;
-        height: 100%;
-        border-radius: 4px 0 0 4px;
-        background-color: #00b094;
-      }
-
-      .title {
-        width: 132px;
-        height: 13px;
-        padding-top: 5px;
-        font-family: "Rubik", sans-serif;
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 13px;
-        letter-spacing: 0;
-        text-align: left;
-        color: #002953;
-      }
-
-      .content-container {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
-        gap: 8px;
-        justify-content: flex-start;
-        justify-content: flex-start;
-      }
-
-      .sub-container {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .label1 {
-        font-family: "Rubik", sans-serif;
-        font-size: 9px;
-        font-weight: 500;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #666666;
-      }
-
-      .value1 {
-        font-family: "Rubik", sans-serif;
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #002953;
-      }
-
-      .label2 {
-        font-family: "Rubik", sans-serif;
-        font-size: 9px;
-        font-weight: 500;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #666666;
-      }
-
-      .value2 {
-        font-family: "Rubik", sans-serif;
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #002953;
-      }
-
-      .label3 {
-        font-family: "Rubik", sans-serif;
-        font-size: 9px;
-        font-weight: 500;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #666666;
-      }
-
-      .value3 {
-        font-family: "Rubik", sans-serif;
-        font-size: 10px;
-        font-weight: 700;
-        line-height: 14px;
-        letter-spacing: 0.16px;
-        text-align: left;
-        color: #002953;
-      }
-    </style>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="card" id="dynamicCard">
-        <div class="title-container">
+        <div class="card-header bg-primary text-white">
             <div class="title" id="cardTitle"></div>
         </div>
-        <div class="content-container">
-            <div class="sub-container">
-                <div class="label1" id="label1"></div>
-                <div class="value1" id="value1"></div>
-            </div>
-            <div class="sub-container">
-                <div class="label2" id="label2"></div>
-                <div class="value2" id="value2"></div>
-            </div>
-            <div class="sub-container">
-                <div class="label3" id="label3"></div>
-                <div class="value3" id="value3"></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="label" id="label1"></div>
+                    <div class="value" id="value1"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="label" id="label2"></div>
+                    <div class="value" id="value2"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="label" id="label3"></div>
+                    <div class="value" id="value3"></div>
+                </div>
             </div>
         </div>
-        <div class="border"></div>
     </div>
 
- <script>
-    // Keep this outside updateCardContent() so it is not creating a new query instance on each function call
-    const query = new URLSearchParams(window.location.search);
+    <!-- Include Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    function updateCardContent() {
-        var title = query.get('title') || '';
-        var label1 = query.get('label1') || '';
-        var value1 = query.get('value1') || '';
-        var label2 = query.get('label2') || '';
-        var value2 = query.get('value2') || '';
-        var label3 = query.get('label3') || '';
-        var value3 = query.get('value3') || '';
+    <script>
+        const params = {};
 
-        document.getElementById('cardTitle').innerHTML = title;
-        document.getElementById('label1').innerHTML = label1;
-        document.getElementById('value1').innerHTML = value1;
-        document.getElementById('label2').innerHTML = label2;
-        document.getElementById('value2').innerHTML = value2;
-        document.getElementById('label3').innerHTML = label3;
-        document.getElementById('value3').innerHTML = value3;
-    }
+        function setQueryParams() {
+            let queryString = window.location.search;
+            if (queryString) {
+                queryString = queryString.replace('?', '').trim();
+            } else {
+                queryString = '';
+            }
 
-    window.addEventListener("load", updateCardContent);
-</script>
+            const searchParams = new URLSearchParams(queryString);
+            searchParams.forEach((value, key) => {
+                params[key] = value;
+            });
+        }
 
+        function updateCardContent() {
+            setQueryParams();
+
+            var title = params['title'] || '';
+            var label1 = params['label1'] || '';
+            var value1 = params['value1'] || '';
+            var label2 = params['label2'] || '';
+            var value2 = params['value2'] || '';
+            var label3 = params['label3'] || '';
+            var value3 = params['value3'] || '';
+
+            document.getElementById('cardTitle').innerHTML = title;
+            document.getElementById('label1').innerHTML = label1;
+            document.getElementById('value1').innerHTML = value1;
+            document.getElementById('label2').innerHTML = label2;
+            document.getElementById('value2').innerHTML = value2;
+            document.getElementById('label3').innerHTML = label3;
+            document.getElementById('value3').innerHTML = value3;
+        }
+
+        window.addEventListener("load", updateCardContent);
+    </script>
 
 </body>
 
